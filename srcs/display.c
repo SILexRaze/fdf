@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/26 12:22:06 by vifonne           #+#    #+#             */
-/*   Updated: 2019/01/30 12:42:55 by vifonne          ###   ########.fr       */
+/*   Created: 2019/01/30 11:12:21 by vifonne           #+#    #+#             */
+/*   Updated: 2019/01/30 11:22:04 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	main(int ac, char **av)
+void	window_setup(t_data *data)
 {
-	t_data	*data;
-
-	if (ac == 2)
-	{
-		if (!(data = (t_data *)ft_memalloc(sizeof(t_data))))
-			exit(0);
-		read_stdin(data, av[1]);
-//		ft_print_list(&data->raw_input);
-		parsing(data);
-		print_double_tab_int(data->tab);
-	}
-	return (0);
+	if (!(data->mlx_ptr = mlx_init()))
+		error(-1);
+	if (!(data->win = mlx_new_window(data->mlx_ptr, WIN_W, WIN_H, "fdf")))
+		error(-1);
+	mlx_clear_window(data->mlx_ptr, data->win);
 }

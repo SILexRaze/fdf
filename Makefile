@@ -6,17 +6,24 @@
 #    By: vifonne <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/05 18:03:13 by vifonne           #+#    #+#              #
-#    Updated: 2019/01/26 14:01:30 by vifonne          ###   ########.fr        #
+#    Updated: 2019/01/30 12:39:18 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS		=		main.c			\
-					key_hook.c
+					key_hook.c		\
+					error.c			\
+					draw.c			\
+					parser.c		\
+					split.c			\
+					utils.c			\
+					display.c
 SRCS_DIR	=		$(addprefix srcs/, $(SRCS))
 LIBFT		=		libft/
+MLX			=		mlx/
 OBJ			=		$(SRCS_DIR:.c=.o)
 CC			=		gcc -Wall -Wextra -Werror -g
-HDR			=		-I $(LIBFT) -I .
+HDR			=		-I $(LIBFT) -I . -I mlx/
 NAME		=		fdf
 .PHONY		=		all $(NAME) $(OBJ) clean fclean re
 UNDER		=		$'\x1b[4m$'
@@ -33,8 +40,10 @@ $(NAME): $(OBJ)
 	@/bin/echo -n "0% ["
 	@make -C libft/
 	@echo "] 100%"
+	@echo "\n$(UNDER)Compiling mlx :$(END)\t\t$(YELLOW)$(CC)$(WHITE)\n"
+	@make -C mlx/
 	@echo "\n$(UNDER)Compiling $(NAME) :$(END)\t\t$(YELLOW)$(CC)$(WHITE)\n"
-	$(CC) $(OBJ) -o $(NAME) $(HDR) -L $(LIBFT) -lft -lmlx -framework OpenGL -framework AppKit
+	$(CC) $(OBJ) mlx/libmlx.a -o $(NAME) $(HDR) -L $(LIBFT) -lft -lm -framework OpenGL -framework AppKit
 
 %.o: %.c
 	$(CC) $(HDR) -c $< -o $@
@@ -44,6 +53,8 @@ clean:
 	rm -rf $(OBJ)
 	@echo "$(GREEN)[OK]$(RED)\n"
 	make clean -C $(LIBFT)
+	@echo "$(GREEN)[OK]$(RED)\n"
+	make clean -C mlx/
 	@echo "$(GREEN)[OK]$(WHITE)"
 
 fclean:	clean
@@ -51,6 +62,8 @@ fclean:	clean
 	rm -f $(NAME)
 	@echo "$(GREEN)[OK]$(RED)\n"
 	make fclean -C $(LIBFT)
+	@echo "$(GREEN)[OK]$(WHITE)"
+	make clean -C mlx/
 	@echo "$(GREEN)[OK]$(WHITE)"
 
 re:	fclean all
