@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 13:41:54 by vifonne           #+#    #+#             */
-/*   Updated: 2019/01/30 12:42:08 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/01/30 14:12:56 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,16 @@ char				**split_fdf(char *str);
 **	DRAWING FUNCTIONS
 */
 void	draw_line(int x0, int y0, int x1, int y1, t_data *data);
-void	draw_line_low(int x0, int y0, int x1, int y1, t_data *data);
-void	draw_line_high(int x0, int y0, int x1, int y1, t_data *data);
+void	draw_default_line(int x0, int y0, int x1, int y1, t_data *data);
+void	draw_vert_line(int x0, int y0, int y1, t_data *data);
+//void	draw_line_low(int x0, int y0, int x1, int y1, t_data *data);
+//void	draw_line_high(int x0, int y0, int x1, int y1, t_data *data);
+void	draw_map(t_data *data);
+
+/*
+**	PROJECTION
+*/
+void				iso(int *x, int *y, int z);
 /*
 **	WINDOW
 */
