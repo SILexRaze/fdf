@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 12:22:06 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/12 04:56:30 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/12 05:26:29 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int ac, char **av)
 		parsing(data);
 //		print_double_tab_int(data->tab);
 		window_setup(data);
-		t_point ps, pe;
+/*		t_point ps, pe;
 		ps.x = WIN_W/2;
 		ps.y = 0;
 		pe.x = WIN_W/2;
@@ -35,7 +35,7 @@ int	main(int ac, char **av)
 		ps.y = WIN_H/2;
 		pe.x = WIN_W;
 		pe.y = WIN_H/2;
-		draw_line(ps, pe, data);
+		draw_line(ps, pe, data);*/
 		draw_map(data);
 		mlx_hook(data->win, 2, 0L, key_press, data);
 		mlx_loop(data->mlx_ptr);

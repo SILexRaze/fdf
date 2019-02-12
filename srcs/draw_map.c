@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 13:41:47 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/12 04:56:16 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/12 05:32:13 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ static int		max_zoom(t_data *data)
 	max_w = max_width(data->tab);
 	max_h = itab_len(data->tab);
 	while (i * max_w < WIN_W/2 - margin && i * max_h < WIN_H/2 - margin)
+	{
+		printf("%d | %d | %d\n", i, i * max_w, i * max_h);
 		i++;
+	}
 	return (i);
 }
 
