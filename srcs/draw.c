@@ -6,65 +6,50 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 11:22:14 by vifonne           #+#    #+#             */
-/*   Updated: 2019/01/30 14:36:27 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/12 04:18:54 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_line(int x0, int y0, int x1, int y1, t_data *data) {
- 
-  int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
-  int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1; 
-  int err = (dx>dy ? dx : -dy)/2, e2;
- 
-  for(;;){
-	mlx_pixel_put(data->mlx_ptr, data->win, x0, y0, 0xFFFFFF);
-    if (x0==x1 && y0==y1) break;
-    e2 = err;
-    if (e2 >-dx) { err -= dy; x0 += sx; }
-    if (e2 < dy) { err += dx; y0 += sy; }
-  }
+static void	apply_offset(t_point *ps, t_point *pe, int offset)
+{
+	ps->x += offset;
+	ps->y += offset;
+	pe->x += offset;
+	pe->y += offset;
 }
 
-/*void	draw_line(int x0, int y0, int x1, int y1, t_data *data)
+void		draw_line(t_point ps, t_point pe, t_data *data)
 {
-	if (x1 == x0)
-		draw_vert_line(x0, y0, y1, data);
-	else
-		draw_default_line(x0, y0, x1, y1, data);
-}
+	t_point	d;
+	t_point	s;
+	int		err;
+	int		err2;
 
-void	draw_default_line(int x0, int y0, int x1, int y1, t_data *data)
-{
-	int	x;
-	int	y;
-	int	d;
-
-	y = y0;
-	x = x0;
-	d = 2 * ((y1 - y0) - (x1 - x0));
-	while (x < x1)
+	apply_offset(&ps, &pe, data->offset);
+	d.x = abs(pe.x-ps.x);
+	s.x = ps.x<pe.x ? 1 : -1;
+	d.y = abs(pe.y-ps.y);
+	s.y = ps.y<pe.y ? 1 : -1; 
+	err = (d.x>d.y ? d.x : -d.y)/2;
+	while (1)
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win, x, y, 0xFFFFFF);
-		if (d > 0)
+		mlx_pixel_put(data->mlx_ptr, data->win, ps.x, ps.y, 0xFFFFFF);
+		if (ps.x==pe.x && ps.y==pe.y)
+			break;
+		err2 = err;
+		if (err2 >-d.x)
 		{
-			y++;
-			d = d - 2 * (x1 - x0);
+			err -= d.y;
+			ps.x += s.x;
 		}
-		d += 2 * (y1 - y0);
-		x++;
+		if (err2 < d.y)
+		{
+			err += d.x;
+			ps.y += s.y;
+		}
 	}
 }
 
-void	draw_vert_line(int x0, int y0, int y1, t_data *data)
-{
-	int	y;
 
-	y = y0;
-	while (y < y1)
-	{
-		mlx_pixel_put(data->mlx_ptr, data->win, x0, y, 0xFFFFFF);
-		y++;
-	}
-}*/

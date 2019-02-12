@@ -6,13 +6,13 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 13:41:47 by vifonne           #+#    #+#             */
-/*   Updated: 2019/01/30 14:46:09 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/12 04:08:21 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void iso(int *x, int *y, int z)
+static void		iso(int *x, int *y, int z)
 {
 	int previous_x;
 	int previous_y;
@@ -23,49 +23,42 @@ void iso(int *x, int *y, int z)
 	*y = -z + (previous_x + previous_y) * sin(0.523599);
 }
 
-
-static void	project_draw(int **tab, int x, int y, int zoom, t_data *data)
+static void		project_draw(t_data *data, t_point i, int zoom)
 {
-	int	x_proj_or = x;
-	int	y_proj_or = y;
-	int xn_proj = x + 1;
-	int	yn_proj = y + 1;
-	int	offset = 300;
+	t_point	p;
+	t_point	p_p;
+	t_point	p_np;
 
-	iso(&x, &y, tab[y][x]);
-	iso(&xn_proj, &y_proj_or, tab[y_proj_or][xn_proj]);
-	draw_line(
-		x * zoom + offset,
-		y * zoom + offset,
-		xn_proj * zoom + offset,
-		y_proj_or * zoom + offset,
-		data
-	);
-	iso(&x_proj_or, &yn_proj, tab[yn_proj][x_proj_or]);
-	draw_line(
-		x * zoom + offset,
-		y * zoom + offset,
-		x_proj_or * zoom + offset,
-		yn_proj * zoom + offset,
-		data
-	);
+	p = i;
+	p.x *= zoom;
+	p.y *= zoom;
+	p_p.x = p.x - 1 * zoom;
+	p_p.y = p.y;
+	iso(&p_p.x, &p_p.y, data->tab[i.y][i.x] * zoom);
+	p_np.x = p.x;
+	p_np.y = p.y;
+	iso(&p_np.x, &p_np.y, data->tab[i.y][i.x + 1] * zoom);
+	draw_line(p_p, p_np, data);
+	p_np.x = p.x - 1 * zoom;
+	p_np.y = p.y + 1 * zoom;
+	iso(&p_np.x, &p_np.y, data->tab[i.y + 1][i.x] * zoom);
+	draw_line(p_p, p_np, data);
 }
 
-void	draw_map(t_data *data)
+void			draw_map(t_data *data)
 {
-	int	coord[2];
-	int	zoom;
+	t_point	p;
 
-	coord[0] = 0;
-	zoom = 30;
-	while (data->tab[coord[0] + 1])
+	p.y = 0;
+	data->offset = 300;
+	while (data->tab[p.y + 1])
 	{
-		coord[1] = 1;
-		while (coord[1] < data->tab[coord[0]][0] - 1)
+		p.x = 1;
+		while (p.x < data->tab[p.y][0] - 1)
 		{
-			project_draw(data->tab, coord[1], coord[0], zoom, data);
-			coord[1]++;
+			project_draw(data, p, 20);
+			p.x++;
 		}
-		coord[0]++;
+		p.y++;
 	}
 }
