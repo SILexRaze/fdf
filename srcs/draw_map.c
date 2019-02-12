@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 13:41:47 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/12 04:08:21 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/12 04:56:16 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,53 @@ static void		project_draw(t_data *data, t_point i, int zoom)
 	draw_line(p_p, p_np, data);
 }
 
+static int		max_width(int **tab)
+{
+	int	i;
+	int	max;
+
+	i = 0;
+	max = 0;
+	while (tab[i])
+	{
+		if (tab[i][0] > max)
+			max = tab[i][0];
+		i++;
+	}
+	return (max);
+}
+
+static int		max_zoom(t_data *data)
+{
+	int	i;
+	int	max_w;
+	int	max_h;
+	int	margin;
+
+	i = 1;
+	margin = 100;
+	max_w = max_width(data->tab);
+	max_h = itab_len(data->tab);
+	while (i * max_w < WIN_W/2 - margin && i * max_h < WIN_H/2 - margin)
+		i++;
+	return (i);
+}
+
 void			draw_map(t_data *data)
 {
 	t_point	p;
+	int		zoom;
 
 	p.y = 0;
-	data->offset = 300;
+	zoom = max_zoom(data);
+	data->offset.x = WIN_W / 2 - max_width(data->tab)/2;
+	data->offset.y = WIN_H / 2 - (itab_len(data->tab) * zoom)/2;
 	while (data->tab[p.y + 1])
 	{
 		p.x = 1;
 		while (p.x < data->tab[p.y][0] - 1)
 		{
-			project_draw(data, p, 20);
+			project_draw(data, p, zoom);
 			p.x++;
 		}
 		p.y++;

@@ -6,18 +6,18 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 11:22:14 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/12 04:18:54 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/12 05:19:39 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	apply_offset(t_point *ps, t_point *pe, int offset)
+static void	apply_offset(t_point *ps, t_point *pe, t_point offset)
 {
-	ps->x += offset;
-	ps->y += offset;
-	pe->x += offset;
-	pe->y += offset;
+	ps->x += offset.x;
+	ps->y += offset.y;
+	pe->x += offset.x;
+	pe->y += offset.y;
 }
 
 void		draw_line(t_point ps, t_point pe, t_data *data)

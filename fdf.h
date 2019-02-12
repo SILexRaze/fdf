@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 13:41:54 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/12 04:07:27 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/12 04:35:02 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@
 # define WIN_W 1024
 # define WIN_H 768
 
-typedef struct		s_data
-{
-	int				**tab;
-	int				offset;
-	void			*mlx_ptr;
-	void			*win;
-	t_list			*raw_input;
-}					t_data;
 typedef struct		s_point
 {
 	int				x;
 	int				y;
 }					t_point;
+typedef struct		s_data
+{
+	int				**tab;
+	void			*mlx_ptr;
+	void			*win;
+	t_list			*raw_input;
+	t_point			offset;
+}					t_data;
 /*
 **	PARSER
 */

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 12:33:06 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/12 01:24:59 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/12 04:26:10 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	itab_len(int **tab)
 		i++;
 	return (i);
 }
-
 
 // TO BE REMOVED
 void	print_double_tab_int(int **tab)
