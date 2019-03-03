@@ -1,7 +1,7 @@
 # fdf
 
 ## Synopsis
-Rasterization of a surface in projected 2D (wireframe representation).
+Rasterisation of a surface in projected 2D (wireframe representation).
 
 ## Skills
 - Graphics
