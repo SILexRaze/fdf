@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 11:22:14 by vifonne           #+#    #+#             */
-/*   Updated: 2019/04/22 16:55:13 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/04/22 17:54:21 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ void		draw_line(t_point ps, t_point pe, t_data *data)
 	int		err2;
 
 	apply_offset(&ps, &pe, data->offset);
-	d.x = abs(pe.x-ps.x);
-	s.x = ps.x<pe.x ? 1 : -1;
-	d.y = abs(pe.y-ps.y);
-	s.y = ps.y<pe.y ? 1 : -1; 
-	err = (d.x>d.y ? d.x : -d.y)/2;
+	d.x = abs(pe.x - ps.x);
+	s.x = ps.x < pe.x ? 1 : -1;
+	d.y = abs(pe.y - ps.y);
+	s.y = ps.y < pe.y ? 1 : -1; 
+	err = (d.x > d.y ? d.x : -1 * d.y) / 2;
 	while (1)
 	{
 		mlx_pixel_put(data->mlx_ptr, data->win, ps.x, ps.y, 0xFFFFFF);
-		if (ps.x==pe.x && ps.y==pe.y)
+		if (ps.x == pe.x && ps.y == pe.y)
 			break;
 		err2 = err;
-		if (err2 >-d.x)
+		if (err2 > -1 * d.x)
 		{
 			err -= d.y;
 			ps.x += s.x;
