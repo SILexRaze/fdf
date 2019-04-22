@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 13:41:54 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/12 04:35:02 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/04/22 17:30:48 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ typedef struct		s_point
 	int				x;
 	int				y;
 }					t_point;
+
 typedef struct		s_data
 {
 	int				**tab;
 	void			*mlx_ptr;
 	void			*win;
+	void			*main_img;
 	t_list			*raw_input;
 	t_point			offset;
 }					t_data;
@@ -55,6 +57,12 @@ void	draw_map(t_data *data);
 */
 void				window_setup(t_data *data);
 int					key_press(int keycode, void *param);
+/*
+**	POSITIONNING
+*/
+int					max_width(int **tab);
+int					max_zoom(t_data *data);
+
 /*
 **	UTILS
 */

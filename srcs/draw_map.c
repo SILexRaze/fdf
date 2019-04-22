@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 13:41:47 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/12 05:32:13 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/04/22 17:17:03 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,39 +45,40 @@ static void		project_draw(t_data *data, t_point i, int zoom)
 	draw_line(p_p, p_np, data);
 }
 
-static int		max_width(int **tab)
+static void		draw_last_right_line(t_data *data, t_point i, int zoom)
 {
-	int	i;
-	int	max;
+	t_point	p;
+	t_point	p_p;
+	t_point	p_np;
 
-	i = 0;
-	max = 0;
-	while (tab[i])
-	{
-		if (tab[i][0] > max)
-			max = tab[i][0];
-		i++;
-	}
-	return (max);
+	p = i;
+	p.x *= zoom;
+	p.y *= zoom;
+	p_p.x = p.x - 1 * zoom;
+	p_p.y = p.y;
+	iso(&p_p.x, &p_p.y, data->tab[i.y][i.x] * zoom);
+	p_np.x = p.x - 1 * zoom;
+	p_np.y = p.y + 1 * zoom;
+	iso(&p_np.x, &p_np.y, data->tab[i.y + 1][i.x] * zoom);
+	draw_line(p_p, p_np, data);
 }
 
-static int		max_zoom(t_data *data)
+static void		draw_last_bot_line(t_data *data, t_point i, int zoom)
 {
-	int	i;
-	int	max_w;
-	int	max_h;
-	int	margin;
+	t_point	p;
+	t_point	p_p;
+	t_point	p_np;
 
-	i = 1;
-	margin = 100;
-	max_w = max_width(data->tab);
-	max_h = itab_len(data->tab);
-	while (i * max_w < WIN_W/2 - margin && i * max_h < WIN_H/2 - margin)
-	{
-		printf("%d | %d | %d\n", i, i * max_w, i * max_h);
-		i++;
-	}
-	return (i);
+	p = i;
+	p.x *= zoom;
+	p.y *= zoom;
+	p_p.x = p.x - 1 * zoom;
+	p_p.y = p.y;
+	iso(&p_p.x, &p_p.y, data->tab[i.y][i.x] * zoom);
+	p_np.x = p.x;
+	p_np.y = p.y;
+	iso(&p_np.x, &p_np.y, data->tab[i.y][i.x + 1] * zoom);
+	draw_line(p_p, p_np, data);
 }
 
 void			draw_map(t_data *data)
@@ -94,9 +95,12 @@ void			draw_map(t_data *data)
 		p.x = 1;
 		while (p.x < data->tab[p.y][0] - 1)
 		{
+			if (p.y == ft_list_size(&data->raw_input) - 2)
+				draw_last_bot_line(data, (t_point){p.x, p.y + 1}, zoom);
 			project_draw(data, p, zoom);
 			p.x++;
 		}
+		draw_last_right_line(data, p, zoom);
 		p.y++;
 	}
 }

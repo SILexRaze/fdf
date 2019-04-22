@@ -1,31 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   positionning.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/26 12:22:06 by vifonne           #+#    #+#             */
-/*   Updated: 2019/04/22 17:34:06 by vifonne          ###   ########.fr       */
+/*   Created: 2019/04/22 16:12:01 by vifonne           #+#    #+#             */
+/*   Updated: 2019/04/22 17:22:37 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	main(int ac, char **av)
+int		max_width(int **tab)
 {
-	t_data	*data;
+	int	i;
+	int	max;
 
-	if (ac == 2)
+	i = 0;
+	max = 0;
+	while (tab[i])
 	{
-		if (!(data = (t_data *)ft_memalloc(sizeof(t_data))))
-			exit(0);
-		read_stdin(data, av[1]);
-		parsing(data);
-		window_setup(data);
-		draw_map(data);
-		mlx_hook(data->win, 2, 0L, key_press, data);
-		mlx_loop(data->mlx_ptr);
+		if (tab[i][0] > max)
+			max = tab[i][0];
+		i++;
 	}
-	return (0);
+	return (max);
+}
+
+int		max_zoom(t_data *data)
+{
+	int	i;
+	int	max_w;
+	int	max_h;
+	int	margin;
+
+	i = 1;
+	margin = 100;
+	max_w = max_width(data->tab);
+	max_h = itab_len(data->tab);
+	while (i * max_w < WIN_W/2 - margin && i * max_h < WIN_H/2 - margin)
+		i++;
+	return (i);
 }

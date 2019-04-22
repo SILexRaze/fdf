@@ -6,11 +6,12 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 11:51:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/01/30 12:39:00 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/04/22 16:54:47 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
 
 void	read_stdin(t_data *data, char *filename)
 {
